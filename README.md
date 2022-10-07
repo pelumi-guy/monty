@@ -33,7 +33,7 @@ push 6
 pall
 add
 pall
-$ ./a.out test.m
+$ ./monty test.m
 6
 5
 3

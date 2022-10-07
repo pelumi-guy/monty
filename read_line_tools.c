@@ -56,7 +56,7 @@ size_t read_line(ssize_t *fd, char **line, stack_t *stack)
 void parse_line(char *str, line_data *data)
 {
 	int idx = 0, j, k, l, m, *num;
-	char *opc, numStr[2] = {' ', '\0'};
+	char *opc, numStr[TOKSIZE];
 
 	opc = data->opcode;
 	num = &(data->num);
@@ -77,7 +77,10 @@ void parse_line(char *str, line_data *data)
 		*num = -1;
 	else
 	{
-		numStr[0] = str[idx];
+		for (j = idx, k = 0; str[j] != '\0' && str[j] != ' ' && str[j] != '\n';
+			j++, k++, idx++)
+			numStr[k] = str[j];
+		numStr[k] = '\0';
 		*num = atoi(numStr);
 	}
 }

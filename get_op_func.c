@@ -18,8 +18,9 @@ void get_op_func(stack_t **stack, int line_number)
 		{"nop", nop}, {"swap", swap},
 		{"add", add}, {"sub", sub},
 		{"mul", mul}, {"div", divide},
-		{"mod", mod},
-		{NULL, NULL}
+		{"mod", mod}, {"pchar", pchar},
+		{"pstr", pstr}, {"rotl", rotl},
+		{"rotr", rotr}, {NULL, NULL}
 	};
 
 	while (ops[i].opcode != NULL)
