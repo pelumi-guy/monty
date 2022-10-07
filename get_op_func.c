@@ -12,6 +12,7 @@
 void get_op_func(stack_t **stack, int line_number)
 {
 	int i = 0;
+
 	instruction_t ops[] = {
 		{"pall", pall}, {"push", push},
 		{"pint", pint}, {"pop", pop},
@@ -22,6 +23,9 @@ void get_op_func(stack_t **stack, int line_number)
 		{"pstr", pstr}, {"rotl", rotl},
 		{"rotr", rotr}, {NULL, NULL}
 	};
+
+	if (data.opcode[0] == '#')
+		return;
 
 	while (ops[i].opcode != NULL)
 	{
