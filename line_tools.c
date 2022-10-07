@@ -2,15 +2,14 @@
 
 /**
 * read_line - read a line from the file
-* @fd: a pointer to the file descriptor
-* @line: string to contain read line
+* @fd: a pointer to the file descriptore
 * @stack: stack
 * Return: (Success) a positive number
 * ------- (Fail) a negative number
 */
-size_t read_line(ssize_t *fd, char **line, stack_t *stack)
+size_t read_line(ssize_t *fd, stack_t *stack)
 {
-	char *csr_ptr, *end_ptr, c;
+	char *csr_ptr, *end_ptr, c, **line = &(data.line);
 	size_t size = BUFSIZE, read_st, length, new_size;
 
 	(*line) = malloc(size * sizeof(char));
@@ -48,18 +47,17 @@ size_t read_line(ssize_t *fd, char **line, stack_t *stack)
 * parse_line - a function to parses line to extract opcode
 * and line number
 * Description:
-* @str: string to parse
-* @data: global data containing structs
-* Return: 0
+* Return:
 */
 
-void parse_line(char *str, line_data *data)
+void parse_line(void)
 {
 	int idx = 0, j, k, l, m, *num;
+	char *str = data.line;
 	char *opc, numStr[TOKSIZE];
 
-	opc = data->opcode;
-	num = &(data->num);
+	opc = data.opcode;
+	num = &(data.num);
 	while (str[idx] == ' ' || str[idx] == '\t')
 		idx++;
 

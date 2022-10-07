@@ -31,7 +31,7 @@ void pall(stack_t **stack, unsigned int line_number __attribute__((unused)))
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new;
+	stack_t *new, *current;
 
 	if (data.num < 0)
 		exit(push_err(*stack, line_number));
@@ -43,12 +43,22 @@ void push(stack_t **stack, unsigned int line_number)
 	new->n = data.num;
 	new->prev = NULL;
 	new->next = NULL;
-	if (*stack != NULL)
+	current = *stack;
+	if (*stack == NULL)
+		*stack = new;
+	else if (data.mode == 0)
 	{
 		new->next = *stack;
 		(*stack)->prev = new;
+		*stack = new;
 	}
-	*stack = new;
+	else if (data.mode == 1)
+	{
+		while (current->next)
+			current = current->next;
+		current->next = new;
+		new->prev = current;
+	}
 }
 
 /**

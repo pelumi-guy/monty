@@ -3,11 +3,11 @@
 /**
  * main - main block
  * Description:
+ * @argc: number of command line arguments
+ * @argv: array of command line argument strings
  * Return: (0) on success
  * ------ (EXIT_FAILURE) on failure
  */
-
-line_data data;
 
 int main(int argc, char **argv)
 {
@@ -24,12 +24,13 @@ int main(int argc, char **argv)
 	if (fd == -1)
 		return (file_err(stack, argv[1]));
 
+	data.mode = 0;
 	for (i = 1; ; i++)
 	{
-		r = read_line(&fd, &(data.line), stack);
+		r = read_line(&fd, stack);
 		if (r == 0)
 			break;
-		parse_line(data.line, &data);
+		parse_line();
 		get_op_func(&stack, i);
 		free(data.line);
 	}
