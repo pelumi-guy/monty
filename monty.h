@@ -1,0 +1,92 @@
+#ifndef MONTY_H
+#define MONTY_H
+
+#include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+/* Macros */
+#define BUFSIZE 256
+#define SUCCESS (1)
+#define FAIL (-1)
+#define NEUTRAL (0)
+
+/**
+* struct stack_s - doubly linked list representation of a stack (or queue)
+* @n: integer
+* @prev: points to the previous element of the stack (or queue)
+* @next: points to the next element of the stack (or queue)
+*
+* Description: doubly linked list node structure
+* for stack, queues, LIFO, FIFO
+*/
+typedef struct stack_s
+{
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
+} stack_t;
+
+/**
+* struct instruction_s - opcode and its function
+* @opcode: the opcode
+* @f: function to handle the opcode
+*
+* Description: opcode and its function
+* for stack, queues, LIFO, FIFO
+*/
+typedef struct instruction_s
+{
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
+
+/**
+* struct line_data_s - data from a line
+* @opcode: the opcode
+* @num: integer arguement of opcode
+*
+* Description: bytecode instruction and number argument on a line
+*/
+typedef struct line_data_s
+{
+	char *opcode;
+	int num;
+} line_data;
+
+/* utilities */
+int _putchar(char c);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_memcpy(char *dest, char *src, unsigned int n);
+void *fill_an_array(void *a, int el, unsigned int len);
+
+/* read and parse line */
+size_t read_line(ssize_t *fd, char **line);
+void parse_line(char *str, line_data *data);
+
+/* op functions */
+void get_op_func(stack_t **stack, int line_number);
+void pall(stack_t **stack, unsigned int line_number __attribute__((unused)));
+void push(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+
+/* cleanup */
+void free_exit(stack_t *stack);
+
+/* Error handlers */
+int usage_err(void);
+int file_err(char *fileName);
+int malloc_err(void);
+int push_err(int line_number);
+int pint_err(int line_number);
+
+/* allusion to global variable */
+extern line_data data;
+
+#endif /* MONTY_H */
