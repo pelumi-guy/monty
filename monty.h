@@ -52,15 +52,16 @@ typedef struct instruction_s
 * struct line_data_s - data from a line
 * @opcode: the opcode
 * @num: integer arguement of opcode
-*
+* @line: single line of file string
 * Description: bytecode instruction and number argument on a line
 */
-typedef struct line_data_s
+struct line_data
 {
 	char *line;
 	char opcode[TOKSIZE];
 	int num;
-} line_data;
+	int mode;
+} data;
 
 /* utilities */
 int _putchar(char c);
@@ -69,8 +70,8 @@ char *_memcpy(char *dest, char *src, unsigned int n);
 void *fill_an_array(void *a, int el, unsigned int len);
 
 /* read and parse line */
-size_t read_line(ssize_t *fd, char **line, stack_t *stack);
-void parse_line(char *str, line_data *data);
+size_t read_line(ssize_t *fd, stack_t *stack);
+void parse_line(void);
 
 /* op functions */
 void get_op_func(stack_t **stack, int line_number);
@@ -92,6 +93,10 @@ void pstr(stack_t **stack, unsigned int line_number __attribute__((unused)));
 void rotl(stack_t **stack, unsigned int line_number __attribute__((unused)));
 void rotr(stack_t **stack, unsigned int line_number __attribute__((unused)));
 
+/* Stack - Queue */
+void _stack(stack_t **stack, unsigned int line_number __attribute__((unused)));
+void _queue(stack_t **stack, unsigned int line_number __attribute__((unused)));
+
 /* cleanup */
 void free_exit(stack_t *stack);
 
@@ -101,8 +106,5 @@ int file_err(stack_t *stack, char *fileName);
 int malloc_err(stack_t *stack);
 int push_err(stack_t *stack, int line_number);
 int pint_err(stack_t *stack, int line_number);
-
-/* allusion to global variable */
-extern line_data data;
 
 #endif /* MONTY_H */

@@ -1,0 +1,64 @@
+#include "monty.h"
+
+/**
+* _stack - sets the format of the data to a stack (LIFO).
+* This is the default behavior of the program.
+* @stack: stack
+* @line_number: line number in monty file
+* Return: void
+*/
+void _stack(stack_t **stack, unsigned int line_number __attribute__((unused)))
+{
+	stack_t *prev, *next;
+
+	if (*stack == NULL && data.mode == 0)
+		return;
+	
+	if (*stack)
+	{
+		next = (*stack)->next;
+		(*stack)->next = NULL;
+		(*stack)->prev = next;
+		while (next)
+		{
+			prev = *stack;
+			*stack = next;
+			next = (*stack)->next;
+			(*stack)->next = prev;
+			(*stack)->prev = next;
+		}
+	}
+	data.mode = 0;
+	printf("mode changed to: %d\n", data.mode);
+}
+
+/**
+* _queue - sets the format of the data to a queue (FIFO).
+* @stack: stack
+* @line_number: line number in monty file
+* Return: void
+*/
+void _queue(stack_t **stack, unsigned int line_number __attribute__((unused)))
+{
+	stack_t *prev, *next;
+
+	if (*stack == NULL && data.mode == 1)
+		return;
+	
+	if (*stack)
+	{
+		next = (*stack)->next;
+		(*stack)->next = NULL;
+		(*stack)->prev = next;
+		while (next)
+		{
+			prev = *stack;
+			*stack = next;
+			next = (*stack)->next;
+			(*stack)->next = prev;
+			(*stack)->prev = next;
+		}
+	}
+	data.mode = 1;
+	printf("mode changed to: %d\n", data.mode);
+}

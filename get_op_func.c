@@ -21,7 +21,8 @@ void get_op_func(stack_t **stack, int line_number)
 		{"mul", mul}, {"div", divide},
 		{"mod", mod}, {"pchar", pchar},
 		{"pstr", pstr}, {"rotl", rotl},
-		{"rotr", rotr}, {NULL, NULL}
+		{"rotr", rotr}, {"stack", _stack},
+		{"queue", _queue}, {NULL, NULL}
 	};
 
 	if (data.opcode[0] == '#')
