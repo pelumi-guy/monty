@@ -13,9 +13,12 @@ void get_op_func(stack_t **stack, int line_number)
 {
 	int i = 0;
 	instruction_t ops[] = {
-		{"pall", pall},
-		{"push", push},
-		{"pint", pint},
+		{"pall", pall}, {"push", push},
+		{"pint", pint}, {"pop", pop},
+		{"nop", nop}, {"swap", swap},
+		{"add", add}, {"sub", sub},
+		{"mul", mul}, {"div", divide},
+		{"mod", mod},
 		{NULL, NULL}
 	};
 

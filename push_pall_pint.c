@@ -33,12 +33,12 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new;
 
+	if (data.num < 0)
+		exit(push_err(*stack, line_number));
+
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
-		exit(malloc_err());
-
-	if (data.num < 0)
-		exit(push_err(line_number));
+		exit(malloc_err(*stack));
 
 	new->n = data.num;
 	new->prev = NULL;
@@ -63,7 +63,7 @@ void push(stack_t **stack, unsigned int line_number)
 void pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)
-		pint_err(line_number);
+		pint_err(*stack, line_number);
 	else
 		printf("%d\n", (*stack)->n);
 

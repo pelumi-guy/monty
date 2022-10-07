@@ -13,6 +13,7 @@
 
 /* Macros */
 #define BUFSIZE 256
+#define TOKSIZE 6
 #define SUCCESS (1)
 #define FAIL (-1)
 #define NEUTRAL (0)
@@ -56,7 +57,8 @@ typedef struct instruction_s
 */
 typedef struct line_data_s
 {
-	char *opcode;
+	char *line;
+	char opcode[TOKSIZE];
 	int num;
 } line_data;
 
@@ -67,7 +69,7 @@ char *_memcpy(char *dest, char *src, unsigned int n);
 void *fill_an_array(void *a, int el, unsigned int len);
 
 /* read and parse line */
-size_t read_line(ssize_t *fd, char **line);
+size_t read_line(ssize_t *fd, char **line, stack_t *stack);
 void parse_line(char *str, line_data *data);
 
 /* op functions */
@@ -75,16 +77,27 @@ void get_op_func(stack_t **stack, int line_number);
 void pall(stack_t **stack, unsigned int line_number __attribute__((unused)));
 void push(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void divide(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
+
+
+
 
 /* cleanup */
 void free_exit(stack_t *stack);
 
 /* Error handlers */
-int usage_err(void);
-int file_err(char *fileName);
-int malloc_err(void);
-int push_err(int line_number);
-int pint_err(int line_number);
+int usage_err(stack_t *stack);
+int file_err(stack_t *stack, char *fileName);
+int malloc_err(stack_t *stack);
+int push_err(stack_t *stack, int line_number);
+int pint_err(stack_t *stack, int line_number);
 
 /* allusion to global variable */
 extern line_data data;

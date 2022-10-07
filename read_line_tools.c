@@ -4,18 +4,18 @@
 * read_line - read a line from the file
 * @fd: a pointer to the file descriptor
 * @line: string to contain read line
-*
+* @stack: stack
 * Return: (Success) a positive number
 * ------- (Fail) a negative number
 */
-size_t read_line(ssize_t *fd, char **line)
+size_t read_line(ssize_t *fd, char **line, stack_t *stack)
 {
 	char *csr_ptr, *end_ptr, c;
 	size_t size = BUFSIZE, read_st, length, new_size;
 
 	(*line) = malloc(size * sizeof(char));
 	if ((*line) == NULL)
-		return (malloc_err());
+		return (malloc_err(stack));
 
 	for (csr_ptr = *line, end_ptr = (*line) + size;;)
 	{
@@ -36,7 +36,7 @@ size_t read_line(ssize_t *fd, char **line)
 			line = _realloc(line, size * sizeof(char),
 			new_size * sizeof(char));
 			if (line == NULL)
-				return (malloc_err());
+				return (malloc_err(stack));
 			size = new_size;
 			end_ptr = (*line) + size;
 			csr_ptr = (*line) + length;
@@ -55,17 +55,16 @@ size_t read_line(ssize_t *fd, char **line)
 
 void parse_line(char *str, line_data *data)
 {
-	int idx = 0, j, k, l, m, num;
+	int idx = 0, j, k, l, m, *num;
 	char *opc, numStr[2] = {' ', '\0'};
 
+	opc = data->opcode;
+	num = &(data->num);
 	while (str[idx] == ' ' || str[idx] == '\t')
 		idx++;
 
 	for (m = idx, l = 0; str[m] != ' ' && str[m] != '\0'; m++, l++)
 		;
-	opc = malloc(sizeof(char) * (l + 1));
-	if (opc == NULL)
-		malloc_err();
 
 	for (j = idx, k = 0; str[j] != '\0' && str[j] != ' ' && str[j] != '\n';
 			j++, k++, idx++)
@@ -75,12 +74,10 @@ void parse_line(char *str, line_data *data)
 		idx++;
 
 	if (str[idx] < 48 || str[idx] > 57)
-		num = -1;
+		*num = -1;
 	else
 	{
 		numStr[0] = str[idx];
-		num = atoi(numStr);
+		*num = atoi(numStr);
 	}
-	data->opcode = opc;
-	data->num = num;
 }

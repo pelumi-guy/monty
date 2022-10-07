@@ -14,28 +14,27 @@ int main(int argc, char **argv)
 	ssize_t fd;
 	size_t r;
 	stack_t *stack = NULL;
-	char *line;
+	/* char *line = data.line; */
 	int i;
 
 	if (argc != 2)
-		return (usage_err());
+		return (usage_err(stack));
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (file_err(argv[1]));
+		return (file_err(stack, argv[1]));
 
 	for (i = 1; ; i++)
 	{
-		r = read_line(&fd, &line);
+		r = read_line(&fd, &(data.line), stack);
 		if (r == 0)
 			break;
-		parse_line(line, &data);
+		parse_line(data.line, &data);
 		get_op_func(&stack, i);
-		free(line);
-		free(data.opcode);
+		free(data.line);
 	}
 	free_exit(stack);
-	free(line);
+	/* free(line); */
 	close(fd);
 	return (0);
 }
