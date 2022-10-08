@@ -17,4 +17,5 @@ void free_exit(stack_t *stack)
 		stack = temp;
 	}
 	free(data.line);
+	close(data.fd);
 }

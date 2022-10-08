@@ -25,7 +25,7 @@ void get_op_func(stack_t **stack, int line_number)
 		{"queue", _queue}, {NULL, NULL}
 	};
 
-	if (data.opcode[0] == '#')
+	if (data.opcode[0] == '\0' || data.opcode[0] == '#')
 		return;
 
 	while (ops[i].opcode != NULL)
