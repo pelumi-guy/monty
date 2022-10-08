@@ -7,14 +7,14 @@
 * Return: (Success) a positive number
 * ------- (Fail) a negative number
 */
-size_t read_line(ssize_t *fd, stack_t *stack)
+size_t read_line(int *fd, stack_t *stack)
 {
 	char *csr_ptr, *end_ptr, c, **line = &(data.line);
 	size_t size = BUFSIZE, read_st, length, new_size;
 
 	(*line) = malloc(size * sizeof(char));
 	if ((*line) == NULL)
-		return (malloc_err(stack));
+		malloc_err(stack);
 
 	for (csr_ptr = *line, end_ptr = (*line) + size;;)
 	{
@@ -35,7 +35,7 @@ size_t read_line(ssize_t *fd, stack_t *stack)
 			line = _realloc(line, size * sizeof(char),
 			new_size * sizeof(char));
 			if (line == NULL)
-				return (malloc_err(stack));
+				malloc_err(stack);
 			size = new_size;
 			end_ptr = (*line) + size;
 			csr_ptr = (*line) + length;
@@ -71,14 +71,21 @@ void parse_line(void)
 	while ((str[idx] == ' ' || str[idx] == '\t') && str[idx] != '\0')
 		idx++;
 
-	if (str[idx] < 48 || str[idx] > 57)
+	for (j = idx, k = 0; str[j] != '\0' && str[j] != ' ' && str[j] != '\n';
+		j++, k++, idx++)
+		numStr[k] = str[j];
+	numStr[k] = '\0';
+
+	for (k = 0; numStr[k]; k++)
+	{
+		if (numStr[k] < 48 || numStr[k] > 57)
+		{
+			*num = -1;
+			return;
+		}
+	}
+	if (numStr[0] == '\0')
 		*num = -1;
 	else
-	{
-		for (j = idx, k = 0; str[j] != '\0' && str[j] != ' ' && str[j] != '\n';
-			j++, k++, idx++)
-			numStr[k] = str[j];
-		numStr[k] = '\0';
 		*num = atoi(numStr);
-	}
 }

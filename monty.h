@@ -13,7 +13,7 @@
 
 /* Macros */
 #define BUFSIZE 256
-#define TOKSIZE 6
+#define TOKSIZE 10
 #define SUCCESS (1)
 #define FAIL (-1)
 #define NEUTRAL (0)
@@ -49,10 +49,12 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
-* struct line_data_s - data from a line
+* struct line_data - data from a line
 * @opcode: the opcode
 * @num: integer arguement of opcode
 * @line: single line of file string
+* @mode: (0) - Stack(default) mode, (1) - List mode
+* @fd: file descriptor for monty bytecode file
 * Description: bytecode instruction and number argument on a line
 */
 struct line_data
@@ -61,6 +63,7 @@ struct line_data
 	char opcode[TOKSIZE];
 	int num;
 	int mode;
+	int fd;
 } data;
 
 /* utilities */
@@ -70,7 +73,7 @@ char *_memcpy(char *dest, char *src, unsigned int n);
 void *fill_an_array(void *a, int el, unsigned int len);
 
 /* read and parse line */
-size_t read_line(ssize_t *fd, stack_t *stack);
+size_t read_line(int *fd, stack_t *stack);
 void parse_line(void);
 
 /* op functions */

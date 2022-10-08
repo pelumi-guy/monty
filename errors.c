@@ -11,7 +11,7 @@ int usage_err(stack_t *stack)
 {
 	fprintf(stderr, "USAGE: monty file\n");
 	free_exit(stack);
-	return (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -26,7 +26,7 @@ int file_err(stack_t *stack, char *fileName)
 {
 	fprintf(stderr, "Error: Can't open file %s\n", fileName);
 	free_exit(stack);
-	return (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -40,7 +40,7 @@ int malloc_err(stack_t *stack)
 {
 	fprintf(stderr, "Error: malloc failed\n");
 	free_exit(stack);
-	return (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -55,7 +55,7 @@ int push_err(stack_t *stack, int line_number)
 {
 	fprintf(stderr, "L%d: usage: push integer\n", line_number);
 	free_exit(stack);
-	return (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -70,5 +70,5 @@ int pint_err(stack_t *stack, int line_number)
 {
 	fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 	free_exit(stack);
-	return (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }

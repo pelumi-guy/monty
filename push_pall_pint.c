@@ -34,11 +34,11 @@ void push(stack_t **stack, unsigned int line_number)
 	stack_t *new, *current;
 
 	if (data.num < 0)
-		exit(push_err(*stack, line_number));
+		push_err(*stack, line_number);
 
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
-		exit(malloc_err(*stack));
+		malloc_err(*stack);
 
 	new->n = data.num;
 	new->prev = NULL;
