@@ -55,6 +55,8 @@ typedef struct instruction_s
 * @line: single line of file string
 * @mode: (0) - Stack(default) mode, (1) - List mode
 * @fd: file descriptor for monty bytecode file
+* @push: boolean (0) - good to push
+* ---------------(1) - error
 * Description: bytecode instruction and number argument on a line
 */
 struct line_data
@@ -64,6 +66,7 @@ struct line_data
 	int num;
 	int mode;
 	int fd;
+	int push;
 } data;
 
 /* utilities */
