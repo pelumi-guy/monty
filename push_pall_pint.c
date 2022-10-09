@@ -33,7 +33,7 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new, *current;
 
-	if (data.num < 0)
+	if (data.push == 1)
 		push_err(*stack, line_number);
 
 	new = malloc(sizeof(stack_t));

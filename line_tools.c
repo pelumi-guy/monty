@@ -63,7 +63,6 @@ void parse_line(void)
 
 	for (m = idx, l = 0; str[m] != ' ' && str[m] != '\0'; m++, l++)
 		;
-
 	for (j = idx, k = 0; str[j] != '\0' && str[j] != ' ' && str[j] != '\n';
 			j++, k++, idx++)
 		opc[k] = str[j];
@@ -78,14 +77,16 @@ void parse_line(void)
 
 	for (k = 0; numStr[k]; k++)
 	{
+		if (k == 0 && numStr[k] == '-')
+			continue;
 		if (numStr[k] < 48 || numStr[k] > 57)
 		{
-			*num = -1;
+			data.push = 1;
 			return;
 		}
 	}
 	if (numStr[0] == '\0')
-		*num = -1;
+		data.push = 1;
 	else
 		*num = atoi(numStr);
 }

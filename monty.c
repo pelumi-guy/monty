@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 	data.mode = 0;
 	for (i = 1; ; i++)
 	{
+		data.push = 0;
 		r = read_line(&(data.fd), stack);
 		if (r == 0)
 			break;
